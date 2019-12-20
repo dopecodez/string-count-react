@@ -4,7 +4,7 @@ import './index.css';
 
 class OutputTable extends React.Component {
     renderTableHeader() {
-        const header = ['Id', 'Word', 'Count']
+        const header = ['Id', 'Word', 'Occurences']
         return header.map((key, index) => {
             return <th key={index}>{key.toUpperCase()}</th>
         })
@@ -12,30 +12,30 @@ class OutputTable extends React.Component {
 
     renderTableData() {
         return this.props.output.map((data, index) => {
-           let col = Object.keys(data);
-           return (
-              <tr key={data.word}>
-                 {col.map((val, index) => {
-                    return <td key={index}>{data[col[index]]}</td>
-                 })}
-              </tr>
-           )
+            let col = Object.keys(data);
+            return (
+                <tr key={data.id}>
+                    {col.map((val, index) => {
+                        return <td key={index}>{data[col[index]]}</td>
+                    })}
+                </tr>
+            )
         })
-     }
+    }
 
     render() {
         return (
-           <div>
-              <h1 id='tableHead'>Number of most occuring words</h1>
-              <table id='outTable'>
-                 <tbody>
-                    <tr>{this.renderTableHeader()}</tr>
-                    {this.renderTableData()}
-                 </tbody>
-              </table>
-           </div>
+            <div id="tableDiv">
+                <h1 id='tableHead'>Words and Occurences</h1>
+                <table id='outTable'>
+                    <tbody>
+                        <tr>{this.renderTableHeader()}</tr>
+                        {this.renderTableData()}
+                    </tbody>
+                </table>
+            </div>
         )
-     }
+    }
 }
 
 class Form extends React.Component {
@@ -43,68 +43,55 @@ class Form extends React.Component {
         super(props);
         this.state = {
             url: 'https://terriblytinytales.com/test.txt',
-            number: 'Enter no of recurring word',
-            renderAgain: true
+            number: ''
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    shouldComponentUpdate(){
-        console.log(`ithil vanna ${this.state.renderAgain}`)
-        return this.state.renderAgain ? true : false;
-    }
-
     async getMostOccuringWords() {
         try {
-            // return await fetch(`/endpoint?url=${this.state.url}&number=${this.state}`);
-            return [
-                {name:'chakka', count:10},
-                {name:'vaazha', count:15}
-            ]
+            return await fetch(`/endpoint?url=${this.state.url}&number=${this.state}`);
+            // return [
+            //     { id: 1 ,name: 'chakka', count: 10 },
+            //     { id: 2 ,name: 'vaazha', count: 15 }
+            // ]
         } catch (error) {
             console.log(error);
         }
     }
 
     handleChange(event) {
-        this.setState({ number: event.target.value,
-        renderAgain: true });
+        this.setState({number: event.target.value});
     }
 
     async handleSubmit(event) {
-        let output = await this.getMostOccuringWords();
-        this.setState({
-            renderAgain :false
-        })
-        this.renderOutputTable(output);
         event.preventDefault();
+        let output = await this.getMostOccuringWords();
+        this.renderOutputTable(output);
     }
 
-    renderOutputTable(output){
-        ReactDOM.unmountComponentAtNode(document.getElementById('formDiv'))
+    renderOutputTable(output) {
         ReactDOM.render(<OutputTable output={output} />, document.getElementById('table'));
     }
 
     render() {
         return (
-            <div>
-                <div id="formDiv" >
-                    <form className='textDiv' onSubmit={this.handleSubmit}>
-                        File URL: <input type='textbox' className='textbox' value={this.state.url} readOnly></input>
-                        Number of most reccurring words : <input type='textbox' className='textbox'
-                            value={this.state.number} onChange={this.handleChange}></input>
-                        <input type="submit" value="Submit"></input>
-                    </form>
-                </div>
-                <div id="table"> </div>
+            <div className='formDiv'>
+                <form className='inputForm' onSubmit={this.handleSubmit}>
+                    <b>File URL</b><br/> <input type='textbox' className='urlBox' value={this.state.url} disabled></input><br/>
+                    <b>Number of words to return</b><br/> <input type='textbox' className='numberBox'
+                        value={this.state.number} onChange={this.handleChange}></input>
+                        <br/>
+                    <input className='submitButton' type="submit" value="Submit"></input>
+                </form>
             </div>
         );
     }
 }
 
 ReactDOM.render(
-    <Form id="form"/>,
-    document.getElementById('root')
+    <Form id="form" />,
+    document.getElementById('form')
 );
 

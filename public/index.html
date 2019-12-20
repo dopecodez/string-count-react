@@ -2,6 +2,30 @@
 <html lang="en">
 
 <head>
+  <style>
+
+#backgroundImage {
+  background-image: url('%PUBLIC_URL%/ttt_logo.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-attachment: fixed;
+  background-size: cover;
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
+  transform: scale(1.1);
+  height: 100%;
+  left: 0;
+  position: fixed;
+  right: 0;
+}
+
+#root {
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  left: 0;
+  position: fixed;
+  right: 0;
+}
+  </style>
   <meta charset="utf-8" />
   <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -25,10 +49,9 @@
   <title>React App</title>
 </head>
 
-<body style="background-image: url('%PUBLIC_URL%/ttt_logo.jpg');background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: 100% 100%;" >
+<body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="backgroundImage"></div>
   <div id="root">
     <div id="form"></div>
     <div id="table"></div>

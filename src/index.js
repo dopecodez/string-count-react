@@ -11,12 +11,15 @@ class OutputTable extends React.Component {
     }
 
     renderTableData() {
+        let count = 1;
         return this.props.output.map((data, index) => {
-            let col = Object.keys(data);
+            let dataWithId = Object.assign({id: count}, data);
+            count++;
+            let col = Object.keys(dataWithId);
             return (
-                <tr key={data.id}>
+                <tr key={index}>
                     {col.map((val, index) => {
-                        return <td key={index}>{data[col[index]]}</td>
+                        return <td key={index}>{dataWithId[col[index]]}</td>
                     })}
                 </tr>
             )
@@ -51,11 +54,13 @@ class Form extends React.Component {
 
     async getMostOccuringWords() {
         try {
-            return await fetch(`/endpoint?url=${this.state.url}&number=${this.state}`);
-            // return [
-            //     { id: 1 ,name: 'chakka', count: 10 },
-            //     { id: 2 ,name: 'vaazha', count: 15 }
-            // ]
+            let response = await fetch(`http://localhost:3004/count?url=${this.state.url}&count=${this.state.number}`, {
+                method: 'GET',
+                headers: new Headers({
+                    'Access-Control-Allow-Origin' : '*'
+                })
+            });
+            return response.json();
         } catch (error) {
             console.log(error);
         }
@@ -68,7 +73,7 @@ class Form extends React.Component {
     async handleSubmit(event) {
         event.preventDefault();
         let output = await this.getMostOccuringWords();
-        this.renderOutputTable(output);
+        this.renderOutputTable(output.data);
     }
 
     renderOutputTable(output) {

@@ -14,17 +14,22 @@
   -webkit-filter: blur(5px);
   transform: scale(1.1);
   height: 100%;
+  width: 100%;
   left: 0;
   position: fixed;
   right: 0;
+  z-index: -1;
 }
 
 #root {
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-  left: 0;
-  position: fixed;
-  right: 0;
+  height: 100%;
+  width: 100%;
+  text-align: center;
 }
+
+html { overflow-y: scroll;}
+body { position: absolute; width:100%}
   </style>
   <meta charset="utf-8" />
   <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
@@ -56,7 +61,5 @@
     <div id="form"></div>
     <div id="table"></div>
   </div>
-
 </body>
-
 </html>

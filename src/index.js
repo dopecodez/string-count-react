@@ -3,20 +3,20 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Loader from 'react-loader-spinner';
 
-class OutputTable extends React.Component {
+class OutputTable extends React.Component { //Output Table component
     constructor(props) {
         super(props);    
         this.state = {
-            isLoading: true,
+            isLoading: true, //setting initial values for state
             output: [],
         }
     }
 
-    componentDidMount() {
+    componentDidMount() { //React hook once component renders
         this.getMostOccuringWords();
     }
 
-    async getMostOccuringWords() {
+    async getMostOccuringWords() { //Function to call back end to get API response
         try {
             this.setState({ isLoading: true });
             let response = await fetch(`http://localhost:3004/count?url=${this.props.url}&count=${this.props.number}`, {
@@ -37,14 +37,14 @@ class OutputTable extends React.Component {
         }
     }
 
-    renderTableHeader() {
+    renderTableHeader() { //function to render table headers
         const header = ['Id', 'Word', 'Occurences']
         return header.map((key, index) => {
             return <th key={index}>{key.toUpperCase()}</th>
         })
     }
 
-    renderTableData() {
+    renderTableData() { //function to render table data
         let count = 1;
         return this.state.output.map((data, index) => {
             let dataWithId = Object.assign({id: count}, data);
@@ -84,27 +84,27 @@ class OutputTable extends React.Component {
     }
 }
 
-class Form extends React.Component {
-    constructor(props) {
+class Form extends React.Component { //Form Component
+    constructor(props) { //constructor
         super(props);    
         this.state = {
-            url: 'https://terriblytinytales.com/test.txt',
+            url: 'https://terriblytinytales.com/test.txt', //setting initial values for state
             number: ''
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleChange(event) {
+    handleChange(event) { //for handling changes to textbox
         this.setState({number: event.target.value});
     }
 
-    async handleSubmit(event) {
-        event.preventDefault();
+    async handleSubmit(event) { //handle submit event
+        event.preventDefault(); // prevent default submit action
         this.renderOutputTable();
     }
 
-    renderOutputTable() {
+    renderOutputTable() { //function to render out put table
         ReactDOM.unmountComponentAtNode(document.getElementById('table'));
         ReactDOM.render(<OutputTable url={this.state.url} number={this.state.number}/>, document.getElementById('table'));
     }

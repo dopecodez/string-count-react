@@ -68,7 +68,7 @@ class OutputTable extends React.Component { //Output Table component
                     [<h1 id='tableHead'>Words and Occurences</h1>,
                     <table id='outTable'>
                     <tbody>
-                        <tr>{this.renderTableHeader()}</tr>,
+                        <tr>{this.renderTableHeader()}</tr>
                         {this.renderTableData()}
                     </tbody>
                     </table>]

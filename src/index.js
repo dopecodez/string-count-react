@@ -1,8 +1,42 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import Loader from 'react-loader-spinner';
 
 class OutputTable extends React.Component {
+    constructor(props) {
+        super(props);    
+        this.state = {
+            isLoading: true,
+            output: [],
+        }
+    }
+
+    componentDidMount() {
+        this.getMostOccuringWords();
+    }
+
+    async getMostOccuringWords() {
+        try {
+            this.setState({ isLoading: true });
+            let response = await fetch(`http://localhost:3004/count?url=${this.props.url}&count=${this.props.number}`, {
+                method: 'GET',
+                headers: new Headers({
+                    'Access-Control-Allow-Origin': '*'
+                })
+            });
+            let result = await response.json();
+            result = result.data;            
+            this.setState({
+                output: result,
+                isLoading: false
+            });
+        } catch (error) {
+            this.setState({ isLoading: false });
+            console.log(error);
+        }
+    }
+
     renderTableHeader() {
         const header = ['Id', 'Word', 'Occurences']
         return header.map((key, index) => {
@@ -12,7 +46,7 @@ class OutputTable extends React.Component {
 
     renderTableData() {
         let count = 1;
-        return this.props.output.map((data, index) => {
+        return this.state.output.map((data, index) => {
             let dataWithId = Object.assign({id: count}, data);
             count++;
             let col = Object.keys(dataWithId);
@@ -29,13 +63,22 @@ class OutputTable extends React.Component {
     render() {
         return (
             <div id="tableDiv">
-                <h1 id='tableHead'>Words and Occurences</h1>
-                <table id='outTable'>
+                {
+                    !this.state.isLoading ?
+                    [<h1 id='tableHead'>Words and Occurences</h1>,
+                    <table id='outTable'>
                     <tbody>
-                        <tr>{this.renderTableHeader()}</tr>
+                        <tr>{this.renderTableHeader()}</tr>,
                         {this.renderTableData()}
                     </tbody>
-                </table>
+                    </table>]
+                    : <Loader
+                    type="Puff"
+                    color="#00BFFF"
+                    height={300}
+                    width={200}
+                    timeout={3000} />
+                }
             </div>
         )
     }
@@ -43,7 +86,7 @@ class OutputTable extends React.Component {
 
 class Form extends React.Component {
     constructor(props) {
-        super(props);
+        super(props);    
         this.state = {
             url: 'https://terriblytinytales.com/test.txt',
             number: ''
@@ -52,32 +95,18 @@ class Form extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    async getMostOccuringWords() {
-        try {
-            let response = await fetch(`http://localhost:3004/count?url=${this.state.url}&count=${this.state.number}`, {
-                method: 'GET',
-                headers: new Headers({
-                    'Access-Control-Allow-Origin' : '*'
-                })
-            });
-            return response.json();
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
     handleChange(event) {
         this.setState({number: event.target.value});
     }
 
     async handleSubmit(event) {
         event.preventDefault();
-        let output = await this.getMostOccuringWords();
-        this.renderOutputTable(output.data);
+        this.renderOutputTable();
     }
 
-    renderOutputTable(output) {
-        ReactDOM.render(<OutputTable output={output} />, document.getElementById('table'));
+    renderOutputTable() {
+        ReactDOM.unmountComponentAtNode(document.getElementById('table'));
+        ReactDOM.render(<OutputTable url={this.state.url} number={this.state.number}/>, document.getElementById('table'));
     }
 
     render() {

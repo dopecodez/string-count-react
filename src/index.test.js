@@ -1,10 +1,11 @@
 import React from "react";
-import { render, unmountComponentAtNode } from "react-dom";
-import { act } from "react-dom/test-utils";
-
+import { unmountComponentAtNode } from "react-dom";
+import { configure , mount, render, shallow } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import {Form, OutputTable} from "./index";
 
 let container = null;
+configure({ adapter: new Adapter() });
 beforeEach(() => {
   // setup a DOM element as a render target
   container = document.createElement("div");
@@ -18,10 +19,28 @@ afterEach(() => {
   container = null;
 });
 
-it("renders with or without a name", () => {
-    act(() => {
-      render(<Form />, container);
-    });
-    expect(container.querySelector(".urlBox").getAttribute("value")).toBe("https://terriblytinytales.com/test.txt");
+describe('Unit Tests for Form', () => {
+  it("check if url is set correctly", () => {
+    const form = shallow(<Form />);
+    const input = form.find('.urlBox');
+    expect(input.props().value).toEqual('https://terriblytinytales.com/test.txt');
+  })
+
+  it("checks if number changes correctly", () => {
+    const form = shallow(<Form />);
+    const input = form.find('.numberBox');
+    input.simulate('change', { target: { value: 5 } })
+    expect(form.state().number).toEqual(5);
+  })
+
+  it('checks if submit works correctly', () => {
+    const fakeEvent = { preventDefault: () => console.log('preventDefault') }
+    const state = {url:'https://terriblytinytales.com/test.txt', number:5}
+    // const expectedArg = "url: https://terriblytinytales.com/test.txt, number: 5";
+    const component = shallow(<Form />);
+    component.setState(state);
+    component.find('.inputForm').simulate('submit', fakeEvent);
+    expect(component.state().submitted).toEqual(true)
+  })
 });
 

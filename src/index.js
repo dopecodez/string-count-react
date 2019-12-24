@@ -8,7 +8,7 @@ export class OutputTable extends React.Component { //Output Table component
         super(props);    
         this.state = {
             isLoading: true, //setting initial values for state
-            output: [],
+            output: []
         }
     }
 
@@ -89,7 +89,8 @@ export class Form extends React.Component { //Form Component
         super(props);    
         this.state = {
             url: 'https://terriblytinytales.com/test.txt', //setting initial values for state
-            number: ''
+            number: '',
+            submitted: false
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -100,7 +101,10 @@ export class Form extends React.Component { //Form Component
     }
 
     async handleSubmit(event) { //handle submit event
-        event.preventDefault(); // prevent default submit action
+        event.preventDefault(); 
+        this.setState({
+            submitted: true
+        })// prevent default submit action
         this.renderOutputTable();
     }
 

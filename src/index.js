@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Loader from 'react-loader-spinner';
 
-class OutputTable extends React.Component { //Output Table component
+export class OutputTable extends React.Component { //Output Table component
     constructor(props) {
         super(props);    
         this.state = {
@@ -19,7 +19,7 @@ class OutputTable extends React.Component { //Output Table component
     async getMostOccuringWords() { //Function to call back end to get API response
         try {
             this.setState({ isLoading: true });
-            let response = await fetch(`http://localhost:3004/count?url=${this.props.url}&count=${this.props.number}`, {
+            let response = await fetch(`https://stormy-springs-25121.herokuapp.com/count?url=${this.props.url}&count=${this.props.number}`, {
                 method: 'GET',
                 headers: new Headers({
                     'Access-Control-Allow-Origin': '*'
@@ -84,7 +84,7 @@ class OutputTable extends React.Component { //Output Table component
     }
 }
 
-class Form extends React.Component { //Form Component
+export class Form extends React.Component { //Form Component
     constructor(props) { //constructor
         super(props);    
         this.state = {
@@ -113,7 +113,7 @@ class Form extends React.Component { //Form Component
         return (
             <div className='formDiv'>
                 <form className='inputForm' onSubmit={this.handleSubmit}>
-                    <b>File URL</b><br/> <input type='textbox' className='urlBox' value={this.state.url} disabled></input><br/>
+                    <b>File URL</b><br/> <input type='textbox' id='urlBox' className='urlBox' value={this.state.url} disabled></input><br/>
                     <b>Number of words to return</b><br/> <input type='textbox' className='numberBox'
                         value={this.state.number} onChange={this.handleChange}></input>
                         <br/>
@@ -126,6 +126,6 @@ class Form extends React.Component { //Form Component
 
 ReactDOM.render(
     <Form id="form" />,
-    document.getElementById('form')
+    document.getElementById('form') || document.createElement('div') //for testing purposes
 );
 

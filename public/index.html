@@ -3,33 +3,38 @@
 
 <head>
   <style>
+    #backgroundImage {
+      background-image: url('%PUBLIC_URL%/ttt_logo.jpg');
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      background-attachment: fixed;
+      background-size: cover;
+      filter: blur(5px);
+      -webkit-filter: blur(5px);
+      transform: scale(1.1);
+      height: 100%;
+      width: 100%;
+      left: 0;
+      position: fixed;
+      right: 0;
+      z-index: -1;
+    }
 
-#backgroundImage {
-  background-image: url('%PUBLIC_URL%/ttt_logo.jpg');
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  background-attachment: fixed;
-  background-size: cover;
-  filter: blur(5px);
-  -webkit-filter: blur(5px);
-  transform: scale(1.1);
-  height: 100%;
-  width: 100%;
-  left: 0;
-  position: fixed;
-  right: 0;
-  z-index: -1;
-}
+    #root {
+      font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+      height: 100%;
+      width: 100%;
+      text-align: center;
+    }
 
-#root {
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-  height: 100%;
-  width: 100%;
-  text-align: center;
-}
+    html {
+      overflow-y: scroll;
+    }
 
-html { overflow-y: scroll;}
-body { position: absolute; width:100%}
+    body {
+      position: absolute;
+      width: 100%
+    }
   </style>
   <title>React App</title>
 </head>
@@ -42,4 +47,5 @@ body { position: absolute; width:100%}
     <div id="table"></div>
   </div>
 </body>
+
 </html>

@@ -26,7 +26,7 @@ export class OutputTable extends React.Component { //Output Table component
                 })
             });
             let result = await response.json();
-            result = result.data;            
+            result = result.data;
             this.setState({
                 output: result,
                 isLoading: false
@@ -68,7 +68,7 @@ export class OutputTable extends React.Component { //Output Table component
                     [<h1 id='tableHead'>Words and Occurences</h1>,
                     <table id='outTable'>
                     <tbody>
-                        <tr>{this.renderTableHeader()}</tr>
+                        <tr key='key'>{this.renderTableHeader()}</tr>
                         {this.renderTableData()}
                     </tbody>
                     </table>]

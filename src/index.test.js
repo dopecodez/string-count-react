@@ -35,12 +35,9 @@ describe('Unit Tests for Form', () => {
 
   it('checks if submit works correctly', () => {
     const fakeEvent = { preventDefault: () => console.log('preventDefault') }
-    const state = {url:'https://terriblytinytales.com/test.txt', number:5}
-    // const expectedArg = "url: https://terriblytinytales.com/test.txt, number: 5";
     const component = shallow(<Form />);
-    component.setState(state);
     component.find('.inputForm').simulate('submit', fakeEvent);
-    expect(component.state().submitted).toEqual(true)
+    expect(component.state().submitted).toEqual(true);
   })
 });
 

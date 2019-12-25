@@ -2,7 +2,7 @@
 
 ![image info](website.PNG)
 
-A string recurrence counter made with React. Will get the N number of strings and their occurences for given url. Also has unit tests on top of this with Jest and Enzyme. The backend is [here](https://github.com/dopecodez/string-counter-express).
+A string recurrence counter made with React. Will get the N number of strings and their occurences for given url. Also has unit tests on top of this with Jest and Enzyme. The backend is [here](https://github.com/dopecodez/string-counter-express). You can find the site hosted on heroku here: https://morning-savannah-24852.herokuapp.com/
 
 If you have any doubts or clarifications on this code, hit me up and I'll try to help you guys out!
 
@@ -40,7 +40,7 @@ npm test
 ```
 ## Usage
 
-Once program is up and running, you can see the page at localhost:3000. It is a simple page with just two elements a form filling in url and number and a table for displaying the data. Right now, the url is hardcoded.
+Once program is up and running, you can see the page at localhost:3000. It is a simple page with just two elements a form filling in url and number and a table for displaying the data. Right now, the url is hardcoded. As mentioned earlier, site is hosted on https://morning-savannah-24852.herokuapp.com/
 
 ## Built With
 

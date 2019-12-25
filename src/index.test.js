@@ -1,6 +1,6 @@
 import React from "react";
 import { unmountComponentAtNode } from "react-dom";
-import { configure , mount, render, shallow } from 'enzyme';
+import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import {Form, OutputTable} from "./index";
 
@@ -39,7 +39,7 @@ function flushPromises() {
 }
 
 describe('Unit Tests for Table', () => {
-  it('check if table renders correctly' , async () => {
+  it('check if table renders correctly' , async (done) => {
     const mockedCallback = () => Promise.resolve([{
       "name": "I",
       "count": 27
@@ -48,29 +48,17 @@ describe('Unit Tests for Table', () => {
       "name": "a",
       "count": 24
     }]);
-    let state = ({
-      output:[{
-        "name": "I",
-        "count": 27
-      },
-      {
-        "name": "a",
-        "count": 24
-      }],
-      isLoading: true
-    })
     let promise;
     const getMostOccuringWords = () => {
       promise = Promise.resolve().then(mockedCallback);
       return promise;
     };
-    const table = mount(<OutputTable getMostOccuringWords={getMostOccuringWords}/>);
+    const table = shallow(<OutputTable getMostOccuringWords={getMostOccuringWords}/>);
     promise.then(() => {
-      table.setState(state);
       table.update();
-      expect(table.find('.thisrow').find('tbody').find('tr').length).toEqual(2);
+      expect(table.find('.outTable').find('tbody').find('tr').length).toEqual(3);
       done();
-    });
+    })
   })
 })
 

@@ -13,7 +13,12 @@ export class OutputTable extends React.Component { //Output Table component
     }
 
     componentDidMount() { //React hook once component renders
-        this.props.getMostOccuringWords ? this.props.getMostOccuringWords() : this.getMostOccuringWords();
+        this.props.getMostOccuringWords ? this.props.getMostOccuringWords().then((result) =>
+            this.setState({
+                output: result,
+                isLoading: false
+            })
+        ) : this.getMostOccuringWords();
     }
 
     async getMostOccuringWords() { //Function to call back end to get API response
@@ -65,10 +70,10 @@ export class OutputTable extends React.Component { //Output Table component
             <div id="tableDiv">
                 {
                     !this.state.isLoading ?
-                    [<h1 id='tableHead'>Words and Occurences</h1>,
-                    <table id='outTable' className='outTable'>
+                    [<h1 id='tableHead' key='header'>Words and Occurences</h1>,
+                    <table id='outTable' className='outTable' key='table'>
                     <tbody>
-                        <tr key='key'>{this.renderTableHeader()}</tr>
+                        <tr>{this.renderTableHeader()}</tr>
                         {this.renderTableData()}
                     </tbody>
                     </table>]

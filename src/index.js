@@ -18,7 +18,7 @@ export class OutputTable extends React.Component { //Output Table component
                 output: result,
                 isLoading: false
             })
-        ) : this.getMostOccuringWords();
+        ) : this.getMostOccuringWords(); //adjusted code to get test to run - quickfix
     }
 
     async getMostOccuringWords() { //Function to call back end to get API response

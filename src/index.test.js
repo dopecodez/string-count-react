@@ -40,7 +40,7 @@ function flushPromises() {
 
 describe('Unit Tests for Table', () => {
   it('check if table renders correctly' , async (done) => {
-    const mockedCallback = () => Promise.resolve([{
+    const mockedCallback = () => Promise.resolve([{ //mocking success for the api call
       "name": "I",
       "count": 27
     },
@@ -49,7 +49,7 @@ describe('Unit Tests for Table', () => {
       "count": 24
     }]);
     let promise;
-    const getMostOccuringWords = () => {
+    const getMostOccuringWords = () => { //mocking the api
       promise = Promise.resolve().then(mockedCallback);
       return promise;
     };

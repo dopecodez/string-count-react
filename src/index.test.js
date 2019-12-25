@@ -32,12 +32,45 @@ describe('Unit Tests for Form', () => {
     input.simulate('change', { target: { value: 5 } })
     expect(form.state().number).toEqual(5);
   })
-
-  it('checks if submit works correctly', () => {
-    const fakeEvent = { preventDefault: () => console.log('preventDefault') }
-    const component = shallow(<Form />);
-    component.find('.inputForm').simulate('submit', fakeEvent);
-    expect(component.state().submitted).toEqual(true);
-  })
 });
+
+function flushPromises() {
+  return new Promise(resolve => setImmediate(resolve));
+}
+
+describe('Unit Tests for Table', () => {
+  it('check if table renders correctly' , async () => {
+    const mockedCallback = () => Promise.resolve([{
+      "name": "I",
+      "count": 27
+    },
+    {
+      "name": "a",
+      "count": 24
+    }]);
+    let state = ({
+      output:[{
+        "name": "I",
+        "count": 27
+      },
+      {
+        "name": "a",
+        "count": 24
+      }],
+      isLoading: true
+    })
+    let promise;
+    const getMostOccuringWords = () => {
+      promise = Promise.resolve().then(mockedCallback);
+      return promise;
+    };
+    const table = mount(<OutputTable getMostOccuringWords={getMostOccuringWords}/>);
+    promise.then(() => {
+      table.setState(state);
+      table.update();
+      expect(table.find('.thisrow').find('tbody').find('tr').length).toEqual(2);
+      done();
+    });
+  })
+})
 

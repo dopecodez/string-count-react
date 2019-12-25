@@ -1,6 +1,6 @@
 # string-count-react[![Build Status](https://travis-ci.org/dopecodez/string-count-react.svg?branch=master)](https://travis-ci.org/dopecodez/string-count-react)
 
-![image info](.website.PNG)
+![image info](website.PNG)
 
 A string recurrence counter made with React. Will get the N number of strings and their occurences for given url. Also has unit tests on top of this with Jest and Enzyme. The backend is [here](https://github.com/dopecodez/string-counter-express).
 

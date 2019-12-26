@@ -24,7 +24,7 @@ export class OutputTable extends React.Component { //Output Table component
     async getMostOccuringWords() { //Function to call back end to get API response
         try {
             this.setState({ isLoading: true });
-            let response = await fetch(`https://stormy-springs-25121.herokuapp.com/count?url=${this.props.url}&count=${this.props.number}`, {
+            let response = await fetch(`https://cors-anywhere.herokuapp.com/https://stormy-springs-25121.herokuapp.com/count?url=${this.props.url}&count=${this.props.number}`, {
                 method: 'GET',
                 headers: new Headers({
                     'Access-Control-Allow-Origin': '*'

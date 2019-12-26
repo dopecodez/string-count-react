@@ -4,20 +4,7 @@ import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import {Form, OutputTable} from "./index";
 
-let container = null;
 configure({ adapter: new Adapter() });
-beforeEach(() => {
-  // setup a DOM element as a render target
-  container = document.createElement("div");
-  document.body.appendChild(container);
-});
-
-afterEach(() => {
-  // cleanup on exiting
-  unmountComponentAtNode(container);
-  container.remove();
-  container = null;
-});
 
 describe('Unit Tests for Form', () => {
   it("check if url is set correctly", () => {
@@ -33,10 +20,6 @@ describe('Unit Tests for Form', () => {
     expect(form.state().number).toEqual(5);
   })
 });
-
-function flushPromises() {
-  return new Promise(resolve => setImmediate(resolve));
-}
 
 describe('Unit Tests for Table', () => {
   it('check if table renders correctly' , async (done) => {
